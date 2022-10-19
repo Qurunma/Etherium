@@ -11,8 +11,111 @@
 				"type": "constructor"
 			},
 			{
-				"inputs": [],
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "candidate",
+						"type": "address"
+					}
+				],
 				"name": "addAdmin",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "idShop",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "idMark",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "description",
+						"type": "string"
+					}
+				],
+				"name": "addComment",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "idShop",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "idMark",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "isLiked",
+						"type": "bool"
+					}
+				],
+				"name": "addLike",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "idShop",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "idMark",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "idComment",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "isLiked",
+						"type": "bool"
+					}
+				],
+				"name": "addLike",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "idShop",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "rating",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "description",
+						"type": "string"
+					}
+				],
+				"name": "addMark",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -38,17 +141,33 @@
 			{
 				"inputs": [
 					{
-						"internalType": "address",
-						"name": "newUser",
-						"type": "address"
-					},
-					{
 						"internalType": "uint256",
-						"name": "role",
+						"name": "idShop",
 						"type": "uint256"
 					}
 				],
+				"name": "deleteShop",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "globalSwitchRequest",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
 				"name": "regUser",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "switchToUser",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -57,11 +176,11 @@
 				"inputs": [
 					{
 						"internalType": "uint256",
-						"name": "role",
+						"name": "idRequest",
 						"type": "uint256"
 					}
 				],
-				"name": "regUser",
+				"name": "upToSeller",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -137,6 +256,40 @@
 										"type": "tuple[]"
 									},
 									{
+										"components": [
+											{
+												"internalType": "address",
+												"name": "sender",
+												"type": "address"
+											},
+											{
+												"components": [
+													{
+														"internalType": "address",
+														"name": "appraiser",
+														"type": "address"
+													},
+													{
+														"internalType": "bool",
+														"name": "isLiked",
+														"type": "bool"
+													}
+												],
+												"internalType": "struct Shop.like[]",
+												"name": "likes",
+												"type": "tuple[]"
+											},
+											{
+												"internalType": "string",
+												"name": "description",
+												"type": "string"
+											}
+										],
+										"internalType": "struct Shop.comment[]",
+										"name": "comments",
+										"type": "tuple[]"
+									},
+									{
 										"internalType": "string",
 										"name": "description",
 										"type": "string"
@@ -174,6 +327,11 @@
 							{
 								"internalType": "uint256",
 								"name": "role",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "nowRole",
 								"type": "uint256"
 							}
 						],
@@ -214,11 +372,11 @@
 	},
 	"sources": {
 		"shop.sol": {
-			"keccak256": "0x96cc3c571f146ae4dec15e05b036c01697738d8c3016736970c25bae9d5e220e",
+			"keccak256": "0x6060c8fe3812de2cc4f15d579a9ee3ec5ec310953cdffb1ec58cdf3c7f19952b",
 			"license": "UNLICENSED",
 			"urls": [
-				"bzz-raw://f23539f47397e7a6cb095e0678f8417a9dd561b51797b0a7b003ad22573f4ab9",
-				"dweb:/ipfs/QmTAkVNjZR915LmMxrTNPXWjGWsyKJuBuDoT6yVP2q55Sc"
+				"bzz-raw://49f30d1edb9aaeefc8fc533d9b443a2569e6490b42db65930122d5e0dbb8039d",
+				"dweb:/ipfs/QmX87YMN2BeDBfmuMSMiLqqzamKS4iJik54JKWoX4bwrmB"
 			]
 		}
 	},

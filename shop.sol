@@ -30,10 +30,11 @@ contract Shop {
         address appraiser;
         uint256 rating;
         like[] likes;
+        comment[] comments;
         string description;
     }
 
-    struct comments {
+    struct comment {
         address sender;
         like[] likes;
         string description;
@@ -86,6 +87,16 @@ contract Shop {
         _;
     }
 
+    modifier isUser(address newUser) {
+        for (uint256 i = 0; i < Users.length; i++) {
+            if (Users[i].user == newUser) {
+                require(Users[i].role == 2, "U isn't admin!");
+                break;
+            }
+        }
+        _;
+    }
+
     //Функции регистрации
 
     function regUser(address newUser, uint256 role) private isntReg(newUser) {
@@ -115,37 +126,64 @@ contract Shop {
         }
     }
 
+    function globalSwitchRequest() public {
+        for (uint256 i = 0; i < Users.length; i++) {
+            require(Users[i].role != 0, "You don't can switch role!");
+            if (Users[i].user == msg.sender) {
+                Requests.push(request(msg.sender, false));
+                break;
+            }
+        }
+    }
+
+    function addComment(
+        uint256 idShop,
+        uint256 idMark,
+        string memory description
+    ) public {
+        Shops[idShop].bookOfMarks[idMark].comments.push();
+        Shops[idShop]
+            .bookOfMarks[idMark]
+            .comments[Shops[idShop].bookOfMarks[idMark].comments.length - 1]
+            .sender = msg.sender;
+        Shops[idShop]
+            .bookOfMarks[idMark]
+            .comments[Shops[idShop].bookOfMarks[idMark].comments.length - 1]
+            .description = description;
+    }
+
     // Функционал админа
 
-    function upToSeller(address newSeller)
+    function upToSeller(uint256 idRequest)
         public
+        isReg(msg.sender)
         isAdmin(msg.sender)
-        returns (bool complited)
     {
         for (uint256 i = 0; i < Users.length; i++) {
-            if (Users[i].user == newSeller) {
-                require(Users[i].role == 2, "Candidate isn't simple user");
-                Users[i].role = 1;
-                return (true);
+            if (Users[i].user == Requests[idRequest].requester) {
+                if (Users[i].role == 1) {
+                    Users[i].role = 2;
+                } else {
+                    Users[i].role = 1;
+                }
             }
-            return (false);
         }
     }
 
-    function downToUser(address newSeller)
-        public
-        isAdmin(msg.sender)
-        returns (bool complited)
-    {
-        for (uint256 i = 0; i < Users.length; i++) {
-            if (Users[i].user == newSeller) {
-                require(Users[i].role == 1, "Candidate isn't seller");
-                Users[i].role = 2;
-                return (true);
-            }
-            return (false);
-        }
-    }
+    // function downToUser(address newSeller)
+    //     public
+    //     isAdmin(msg.sender)
+    //     returns (bool complited)
+    // {
+    //     for (uint256 i = 0; i < Users.length; i++) {
+    //         if (Users[i].user == newSeller) {
+    //             require(Users[i].role == 1, "Candidate isn't seller");
+    //             Users[i].role = 2;
+    //             return (true);
+    //         }
+    //         return (false);
+    //     }
+    // }
 
     function addAdmin(address candidate)
         public
@@ -181,7 +219,7 @@ contract Shop {
         delete Shops[idShop];
     }
 
-    //Функционал продавца
+    //Функционал покупателя
 
     function addMark(
         // TODO: отсутствие роли из этого магазина
@@ -199,6 +237,25 @@ contract Shop {
         Shops[idShop]
             .bookOfMarks[Shops[idShop].bookOfMarks.length - 1]
             .description = description;
+    }
+
+    function addLike(
+        uint256 idShop,
+        uint256 idMark,
+        bool isLiked
+    ) public isUser(msg.sender) {
+        Shops[idShop].bookOfMarks[idMark].likes.push(like(msg.sender, isLiked));
+    }
+
+    function addLike(
+        uint256 idShop,
+        uint256 idMark,
+        uint256 idComment,
+        bool isLiked
+    ) public isUser(msg.sender) {
+        Shops[idShop].bookOfMarks[idMark].comments[idComment].likes.push(
+            like(msg.sender, isLiked)
+        );
     }
 
     // Функции вывода данных
