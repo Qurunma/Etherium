@@ -357,7 +357,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"libs/shop.sol": "Shop"
+			"src/libs/shop.sol": "Shop"
 		},
 		"evmVersion": "london",
 		"libraries": {},
@@ -371,12 +371,12 @@
 		"remappings": []
 	},
 	"sources": {
-		"libs/shop.sol": {
-			"keccak256": "0x057c189d0b912be264910d1604f6837a1b8ea5b8f90a2d96900a02b51f394edd",
+		"src/libs/shop.sol": {
+			"keccak256": "0x57a0b7302eedcf80cf2f72ee7f5904515ef4b1614ef1578bdc340adc3d32b59f",
 			"license": "UNLICENSED",
 			"urls": [
-				"bzz-raw://1da17fe57727f8ccb8252e447113e02b92df61f4dad59493ac4c45a485e0adbd",
-				"dweb:/ipfs/QmUkNWiaBevcv1BE2846BnLmFanptn2Km9eygCJ8vgfTBJ"
+				"bzz-raw://bb53b31bb59878d79f675f9e2b8169cd9058a0c72238810e447e24e2c9142700",
+				"dweb:/ipfs/Qme2Dj1z8jXXhY38UTvJ8gv6Rt3XvEe4DXpYid9WiSQHYN"
 			]
 		}
 	},

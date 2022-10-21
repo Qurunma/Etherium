@@ -44,7 +44,12 @@ contract Shop {
     user[] Users;
     request[] Requests;
 
-    constructor() {}
+    constructor() {
+        regUser(0x2EEb8e636d2B7bF006AEf7DF63C1B388C3d0bB5E, 0);
+        regUser(0x55cC20d0CdDFED1f06b669A8Ff6ebA58218bbbd7, 1);
+        regUser(0xb033788a9a2A69e4d007b05Ad15893bA57f788C7, 2);
+        regUser(0x692BEb097E09a1Fd74Dafa495705d9cBDCE84bf9, 2);
+    }
 
     // Частоиспользуемые или сложные проверки
 
@@ -101,7 +106,7 @@ contract Shop {
 
     function regUser(address newUser, uint256 role) private isntReg(newUser) {
         require(role < 3, "This role isn't exists");
-        Users.push(user(msg.sender, role, role));
+        Users.push(user(newUser, role, role));
     }
 
     function regUser() public isntReg(msg.sender) {
