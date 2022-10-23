@@ -7,6 +7,14 @@ function SetAccount() {
   const accounts = useSelector((state) => state.accounts);
   const selectedAccount = useSelector((state) => state.selectedAccount);
 
+  const localSelectedAccount = localStorage.getItem("account") || 0;
+  console.log(localSelectedAccount);
+  localStorage.clear();
+
+  if (localSelectedAccount != 0) {
+    dispatch({ type: "setSelectedAccount", payload: localSelectedAccount });
+  }
+
   if (accounts.length !== 100) {
     get();
   }
@@ -22,7 +30,6 @@ function SetAccount() {
       balance = await web3.eth
         .getBalance(localAllAcc[selectedAccount])
         .then((data) => data);
-      console.log(localAllAcc[selectedAccount]);
     }
     if (localAllAcc.length !== 0) {
       dispatch({ type: "setAccounts", payload: localAllAcc });
@@ -34,7 +41,6 @@ function SetAccount() {
       dispatch({ type: "setSelectedBalance", payload: balance });
     }
   }
-
   return (
     <select
       className="set-acc"
@@ -43,9 +49,23 @@ function SetAccount() {
           type: "setSelectedAccount",
           payload: e.target.selectedIndex,
         });
+        localStorage.setItem("account", e.target.selectedIndex);
       }}
     >
       {accounts.map((element, index) => {
+        console.log(index);
+        console.log(Number(localSelectedAccount));
+        console.log(index == Number(localSelectedAccount));
+        if (
+          index == Number(localSelectedAccount) &&
+          localSelectedAccount != 0
+        ) {
+          return (
+            <option value={element} key={index} selected>
+              {element}
+            </option>
+          );
+        }
         return (
           <option value={element} key={index}>
             {element}

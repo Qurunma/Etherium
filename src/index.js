@@ -8,7 +8,7 @@ import { abi } from "./libs/abi.js";
 import { Provider } from "react-redux";
 import store from "./libs/Storage";
 
-const contractAddress = "0x7c34CCeD69C2A15eB35094701B9394c0D64165a6";
+const contractAddress = "0x198CEEB7b2e47ca1Fa448b3105BCd9C4dD42E04D";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 export let web3, contract;

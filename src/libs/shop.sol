@@ -45,10 +45,10 @@ contract Shop {
     request[] Requests;
 
     constructor() {
-        regUser(0x2EEb8e636d2B7bF006AEf7DF63C1B388C3d0bB5E, 0);
-        regUser(0x55cC20d0CdDFED1f06b669A8Ff6ebA58218bbbd7, 1);
-        regUser(0xb033788a9a2A69e4d007b05Ad15893bA57f788C7, 2);
-        regUser(0x692BEb097E09a1Fd74Dafa495705d9cBDCE84bf9, 2);
+        regUser(0x0ac6a47E90449Df6eECF99e27Ed9BAf8c358bca9, 0);
+        regUser(0xa25B3d29531D6Cd15d9D3b6f387520AB371c1161, 1);
+        regUser(0xc54259cE11383c35D82Bd22FfD730F9764bC5a44, 2);
+        regUser(0xf4eE813A8C8214FC058636E31e670213cFC183b5, 2);
     }
 
     // Частоиспользуемые или сложные проверки
@@ -61,13 +61,13 @@ contract Shop {
                 break;
             }
         }
-        require(!isRegistred, "U isn't registred!");
+        require(!isRegistred, "200"); //Вы не зарегистрированы
         _;
     }
 
     modifier isntReg(address newUser) {
         for (uint256 i = 0; i < Users.length; i++) {
-            require(Users[i].user != newUser, "U already registered!");
+            require(Users[i].user != newUser, "201"); //Вы уже зарегистрированы
         }
         _;
     }
@@ -85,7 +85,7 @@ contract Shop {
     modifier isAdmin(address newUser) {
         for (uint256 i = 0; i < Users.length; i++) {
             if (Users[i].user == newUser) {
-                require(Users[i].nowRole == 0, "U isn't admin!");
+                require(Users[i].nowRole == 0, "100"); // На данный момент вы не являетесь админом 
                 break;
             }
         }
@@ -95,7 +95,7 @@ contract Shop {
     modifier isUser(address newUser) {
         for (uint256 i = 0; i < Users.length; i++) {
             if (Users[i].user == newUser) {
-                require(Users[i].role == 2, "U isn't admin!");
+                require(Users[i].role == 2, "101"); // Вы не являетесь простым пользователем 
                 break;
             }
         }
@@ -105,7 +105,7 @@ contract Shop {
     //Функции регистрации
 
     function regUser(address newUser, uint256 role) private isntReg(newUser) {
-        require(role < 3, "This role isn't exists");
+        require(role < 3, "102"); // такой роли не существует
         Users.push(user(newUser, role, role));
     }
 
@@ -119,7 +119,7 @@ contract Shop {
 
     function switchToUser() public {
         for (uint256 i = 0; i < Users.length; i++) {
-            require(Users[i].role != 2, "You don't can switch role!");
+            require(Users[i].role != 2, "103"); //невозможно сменить роль для покупателя
             if (Users[i].user == msg.sender) {
                 if (Users[i].role == Users[i].nowRole) {
                     Users[i].nowRole = 2;
@@ -133,7 +133,7 @@ contract Shop {
 
     function globalSwitchRequest() public {
         for (uint256 i = 0; i < Users.length; i++) {
-            require(Users[i].role != 0, "You don't can switch role!");
+            require(Users[i].role != 0, "104"); //невозможно создать запрос на смену роли для администратора 
             if (Users[i].user == msg.sender) {
                 Requests.push(request(msg.sender, false));
                 break;
