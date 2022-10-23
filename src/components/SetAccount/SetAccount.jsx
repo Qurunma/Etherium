@@ -7,9 +7,7 @@ function SetAccount() {
   const accounts = useSelector((state) => state.accounts);
   const selectedAccount = useSelector((state) => state.selectedAccount);
 
-  const localSelectedAccount = localStorage.getItem("account") || 0;
-  console.log(localSelectedAccount);
-  localStorage.clear();
+  const localSelectedAccount = sessionStorage.getItem("account") || 0;
 
   if (localSelectedAccount != 0) {
     dispatch({ type: "setSelectedAccount", payload: localSelectedAccount });
@@ -49,13 +47,10 @@ function SetAccount() {
           type: "setSelectedAccount",
           payload: e.target.selectedIndex,
         });
-        localStorage.setItem("account", e.target.selectedIndex);
+        sessionStorage.setItem("account", e.target.selectedIndex);
       }}
     >
       {accounts.map((element, index) => {
-        console.log(index);
-        console.log(Number(localSelectedAccount));
-        console.log(index == Number(localSelectedAccount));
         if (
           index == Number(localSelectedAccount) &&
           localSelectedAccount != 0

@@ -13,7 +13,7 @@ function SwitchRole() {
           .switchToUser()
           .send({ from: registeredAccounts[currentAccount].user })
       );
-      localStorage.setItem("account", currentAccount);
+      sessionStorage.setItem("account", currentAccount);
       window.location.reload();
     } catch (e) {
       if (e.message.includes("103")) alert("Вы не можете изменять свою роль");

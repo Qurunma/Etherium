@@ -14,11 +14,9 @@ function Register() {
           .send({ from: accounts[currentAccount], gas: 1000000 })
       );
       alert("Регистрация успешна!");
-      localStorage.setItem("account", currentAccount);
+      sessionStorage.setItem("account", currentAccount);
       window.location.reload();
     } catch (e) {
-      console.log(e);
-
       if (e.message.includes("201")) alert("Вы уже зарегистрированы!");
     }
   };
