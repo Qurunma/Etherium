@@ -2,15 +2,15 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App/App";
-// import { BrowserRouter as Router } from "react-router-dom";
 import Web3 from "web3";
 import { abi } from "./libs/abi.js";
 import { Provider } from "react-redux";
 import store from "./libs/Storage";
+import { BrowserRouter } from "react-router-dom";
 
-const contractAddress = "0x198CEEB7b2e47ca1Fa448b3105BCd9C4dD42E04D";
+const contractAddress = "0xF1Cc281f71da57BB7a66556d00389449cff8D7c3";
 const root = ReactDOM.createRoot(document.getElementById("root"));
-
+ 
 export let web3, contract;
 
 function network() {
@@ -20,14 +20,10 @@ function network() {
 
 network();
 
-// React.useEffect(() => {}, []);
-
 root.render(
   <Provider store={store}>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </Provider>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals

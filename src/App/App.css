@@ -36,3 +36,11 @@
     transform: rotate(360deg);
   }
 }
+
+.admin-panel {
+  display: inline-grid;
+}
+
+.open-admin-panel {
+  display: inline-grid;
+}

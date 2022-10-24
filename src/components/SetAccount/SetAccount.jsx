@@ -7,7 +7,8 @@ function SetAccount() {
   const accounts = useSelector((state) => state.accounts);
   const selectedAccount = useSelector((state) => state.selectedAccount);
 
-  const localSelectedAccount = sessionStorage.getItem("account") || 0;
+  const localSelectedAccount =
+    sessionStorage.getItem("account") || selectedAccount;
 
   if (localSelectedAccount != 0) {
     dispatch({ type: "setSelectedAccount", payload: localSelectedAccount });
@@ -19,6 +20,10 @@ function SetAccount() {
 
   async function get() {
     const localAllAcc = await web3.eth.getAccounts().then((data) => data);
+    const localShops = await contract.methods
+      .view_Shops()
+      .call()
+      .then((data) => data);
     let balance;
     const localRegisteredAcc = await contract.methods
       .view_Users()
@@ -28,6 +33,9 @@ function SetAccount() {
       balance = await web3.eth
         .getBalance(localAllAcc[selectedAccount])
         .then((data) => data);
+    }
+    if (localShops.length !== 0) {
+      dispatch({ type: "setShops", payload: localShops });
     }
     if (localAllAcc.length !== 0) {
       dispatch({ type: "setAccounts", payload: localAllAcc });

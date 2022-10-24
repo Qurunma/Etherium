@@ -1,38 +1,26 @@
 import "./App.css";
-import SetAccount from "../components/SetAccount";
-import AccountInfo from "../components/AccountInfo";
-import { useSelector } from "react-redux";
-import SwitchRole from "../components/SwitchRole";
-import Register from "../components/Register";
+import { Route, Routes } from "react-router-dom";
+import MainPage from "../components/MainPage";
+import AdminPanel from "../components/AdminPanel";
+import AddShop from "../components/AddShop";
+import AddAdmin from "../components/AddAdmin";
+import ChangeRole from "../components/ChangeRole";
 
 function App() {
-  const accounts = useSelector((store) => store.accounts);
-  const selectedAccount = useSelector((store) => store.selectedAccount);
-  const registeredAccounts = useSelector((store) => store.registeredAccounts);
-
-  let isExists = false;
   return (
     <div className="App">
-      <SetAccount></SetAccount>
-      {registeredAccounts.map((element) => {
-        if (element.role < 2 && element.user == accounts[selectedAccount]) {
-          isExists = true;
-          return (
-            <div>
-              <AccountInfo></AccountInfo>
-              <SwitchRole></SwitchRole>
-            </div>
-          );
-        } else if (element.user == accounts[selectedAccount]) {
-          isExists = true;
-          return <AccountInfo></AccountInfo>;
-        }
-      })}
-      {!isExists ? (
-        <div>
-          <Register></Register>
-        </div>
-      ) : undefined}
+      <Routes>
+        <Route path="/" element={<MainPage></MainPage>}></Route>
+        <Route path="/admin" element={<AdminPanel></AdminPanel>}></Route>
+        <Route path="/admin/add-admin" element={<AddAdmin></AddAdmin>}></Route>
+        <Route path="/admin/add-shop" element={<AddShop></AddShop>}></Route>
+        <Route
+          path="/admin/change-role"
+          element={<ChangeRole></ChangeRole>}
+        ></Route>
+        <Route path="/admin/delete-shop" element={<></>}></Route>
+        <Route path="*" element={<h1>404 Not Found</h1>}></Route>
+      </Routes>
     </div>
   );
 }
