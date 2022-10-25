@@ -152,6 +152,32 @@
 				"type": "function"
 			},
 			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "idRequest",
+						"type": "uint256"
+					}
+				],
+				"name": "downToUser",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "idShop",
+						"type": "uint256"
+					}
+				],
+				"name": "globalSwitchRequest",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
 				"inputs": [],
 				"name": "globalSwitchRequest",
 				"outputs": [],
@@ -187,14 +213,14 @@
 			},
 			{
 				"inputs": [],
-				"name": "view_Requests",
+				"name": "view_Requests_Sellers",
 				"outputs": [
 					{
 						"components": [
 							{
-								"internalType": "address",
-								"name": "requester",
-								"type": "address"
+								"internalType": "uint256",
+								"name": "idRequester",
+								"type": "uint256"
 							},
 							{
 								"internalType": "bool",
@@ -202,7 +228,37 @@
 								"type": "bool"
 							}
 						],
-						"internalType": "struct Shop.request[]",
+						"internalType": "struct Shop.requestForSeller[]",
+						"name": "",
+						"type": "tuple[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "view_Requests_Users",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint256",
+								"name": "idRequester",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "idShop",
+								"type": "uint256"
+							},
+							{
+								"internalType": "bool",
+								"name": "status",
+								"type": "bool"
+							}
+						],
+						"internalType": "struct Shop.requestForUser[]",
 						"name": "",
 						"type": "tuple[]"
 					}
@@ -372,11 +428,11 @@
 	},
 	"sources": {
 		"src/libs/shop.sol": {
-			"keccak256": "0x500aa511c102c8a11bd8cfc62bc85342c8e37f79e5205034008ec5570f0f13ce",
+			"keccak256": "0x1478514259884ca49db652439cc3d2efabed6922751163d528a33932d121015a",
 			"license": "UNLICENSED",
 			"urls": [
-				"bzz-raw://6735f839cb997ae521ada5ec435ed0efdb4c75958e4626f29836b8ca3a1b3255",
-				"dweb:/ipfs/QmbkQGyAf7ZUrYARUKeUGcCvYNngAyUesCFeJT8yumDKPa"
+				"bzz-raw://b458cff419f58e77b7440af9156d580ae182faa82dad73c0e23b9b645f43df14",
+				"dweb:/ipfs/QmQgojbFohR3nxA3PeEu6ENowrZPUnhHWLDy9DMXDYDti3"
 			]
 		}
 	},

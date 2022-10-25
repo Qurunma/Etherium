@@ -16,8 +16,14 @@ contract Shop {
         uint256[] sellers;
     }
 
-    struct request {
-        address requester;
+    struct requestForSeller {
+        uint256 idRequester;
+        bool status;
+    }
+
+    struct requestForUser {
+        uint256 idRequester;
+        uint256 idShop;
         bool status;
     }
 
@@ -42,13 +48,16 @@ contract Shop {
 
     shop[] Shops;
     user[] Users;
-    request[] Requests;
+    requestForSeller[] RequestsForSellers;
+    requestForUser[] RequestsForUsers;
 
     constructor() {
         regUser(0x2EEb8e636d2B7bF006AEf7DF63C1B388C3d0bB5E, 0);
         regUser(0x55cC20d0CdDFED1f06b669A8Ff6ebA58218bbbd7, 1);
         regUser(0xb033788a9a2A69e4d007b05Ad15893bA57f788C7, 2);
         regUser(0x692BEb097E09a1Fd74Dafa495705d9cBDCE84bf9, 2);
+        addShop(0x3fe4252B00b1B6AA40b172410B02025Fb3BfA804, "KLG");
+        Shops[Shops.length-1].sellers.push(1);
     }
 
     // Частоиспользуемые или сложные проверки
@@ -85,7 +94,7 @@ contract Shop {
     modifier isAdmin(address newUser) {
         for (uint256 i = 0; i < Users.length; i++) {
             if (Users[i].user == newUser) {
-                require(Users[i].nowRole == 0, "100"); // На данный момент вы не являетесь админом 
+                require(Users[i].nowRole == 0, "100"); // На данный момент вы не являетесь админом
                 break;
             }
         }
@@ -95,7 +104,7 @@ contract Shop {
     modifier isUser(address newUser) {
         for (uint256 i = 0; i < Users.length; i++) {
             if (Users[i].user == newUser) {
-                require(Users[i].role == 2, "101"); // Вы не являетесь простым пользователем 
+                require(Users[i].role == 2, "101"); // Вы не являетесь простым пользователем
                 break;
             }
         }
@@ -119,8 +128,8 @@ contract Shop {
 
     function switchToUser() public {
         for (uint256 i = 0; i < Users.length; i++) {
-            require(Users[i].role != 2, "103"); //невозможно сменить роль для покупателя
             if (Users[i].user == msg.sender) {
+            require(Users[i].role != 2, "103"); //невозможно сменить роль для покупателя
                 if (Users[i].role == Users[i].nowRole) {
                     Users[i].nowRole = 2;
                 } else {
@@ -131,11 +140,21 @@ contract Shop {
         }
     }
 
+    function globalSwitchRequest(uint256 idShop) public {
+        for (uint256 i = 0; i < Users.length; i++) {
+            if (Users[i].user == msg.sender) {
+                require(Users[i].role != 0, "104"); //невозможно создать запрос на смену роли для администратора
+                RequestsForUsers.push(requestForUser(i, idShop, false));
+                break;
+            }
+        }
+    }
+
     function globalSwitchRequest() public {
         for (uint256 i = 0; i < Users.length; i++) {
-            require(Users[i].role != 0, "104"); //невозможно создать запрос на смену роли для администратора 
             if (Users[i].user == msg.sender) {
-                Requests.push(request(msg.sender, false));
+                require(Users[i].role != 0, "104"); //невозможно создать запрос на смену роли для администратора
+                RequestsForSellers.push(requestForSeller(i, false));
                 break;
             }
         }
@@ -164,12 +183,27 @@ contract Shop {
         isReg(msg.sender)
         isAdmin(msg.sender)
     {
-        for (uint256 i = 0; i < Users.length; i++) {
-            if (Users[i].user == Requests[idRequest].requester) {
-                if (Users[i].role == 1) {
-                    Users[i].role = 2;
-                } else {
-                    Users[i].role = 1;
+        Users[RequestsForUsers[idRequest].idRequester].role = 1;
+        Shops[RequestsForUsers[idRequest].idShop].sellers.push(
+            RequestsForUsers[idRequest].idRequester
+        );
+        RequestsForUsers[idRequest].status = true;
+    }
+
+    function downToUser(uint256 idRequest)
+        public
+        isReg(msg.sender)
+        isAdmin(msg.sender)
+    {
+        for (uint256 i = 0; i < Shops.length; i++) {
+            for (uint256 j = 0; j < Shops[i].sellers.length; j++) {
+                if (
+                    RequestsForSellers[idRequest].idRequester ==
+                    Shops[i].sellers[j]
+                ) {
+                    delete Shops[i].sellers[j];
+                    RequestsForUsers[idRequest].status = true;
+                    break;
                 }
             }
         }
@@ -184,6 +218,7 @@ contract Shop {
             if (Users[i].user == candidate) {
                 require(Users[i].role != 0, "U already admin!");
                 Users[i].role = 0;
+                Users[i].nowRole = 0;
                 break;
             }
         }
@@ -258,7 +293,19 @@ contract Shop {
         return (Users);
     }
 
-    function view_Requests() public view returns (request[] memory) {
-        return (Requests);
+    function view_Requests_Sellers()
+        public
+        view
+        returns (requestForSeller[] memory)
+    {
+        return (RequestsForSellers);
+    }
+
+    function view_Requests_Users()
+        public
+        view
+        returns (requestForUser[] memory)
+    {
+        return (RequestsForUsers);
     }
 }

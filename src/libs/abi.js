@@ -1,10 +1,5 @@
 export const abi = [
   {
-    inputs: [],
-    stateMutability: "nonpayable",
-    type: "constructor",
-  },
-  {
     inputs: [
       {
         internalType: "address",
@@ -146,6 +141,32 @@ export const abi = [
     type: "function",
   },
   {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "idRequest",
+        type: "uint256",
+      },
+    ],
+    name: "downToUser",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "idShop",
+        type: "uint256",
+      },
+    ],
+    name: "globalSwitchRequest",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
     inputs: [],
     name: "globalSwitchRequest",
     outputs: [],
@@ -167,6 +188,11 @@ export const abi = [
     type: "function",
   },
   {
+    inputs: [],
+    stateMutability: "nonpayable",
+    type: "constructor",
+  },
+  {
     inputs: [
       {
         internalType: "uint256",
@@ -181,14 +207,14 @@ export const abi = [
   },
   {
     inputs: [],
-    name: "view_Requests",
+    name: "view_Requests_Sellers",
     outputs: [
       {
         components: [
           {
-            internalType: "address",
-            name: "requester",
-            type: "address",
+            internalType: "uint256",
+            name: "idRequester",
+            type: "uint256",
           },
           {
             internalType: "bool",
@@ -196,7 +222,37 @@ export const abi = [
             type: "bool",
           },
         ],
-        internalType: "struct Shop.request[]",
+        internalType: "struct Shop.requestForSeller[]",
+        name: "",
+        type: "tuple[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "view_Requests_Users",
+    outputs: [
+      {
+        components: [
+          {
+            internalType: "uint256",
+            name: "idRequester",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "idShop",
+            type: "uint256",
+          },
+          {
+            internalType: "bool",
+            name: "status",
+            type: "bool",
+          },
+        ],
+        internalType: "struct Shop.requestForUser[]",
         name: "",
         type: "tuple[]",
       },

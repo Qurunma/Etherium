@@ -24,6 +24,14 @@ function SetAccount() {
       .view_Shops()
       .call()
       .then((data) => data);
+    const localRequestsUsers = await contract.methods
+      .view_Requests_Users()
+      .call()
+      .then((data) => data);
+    const localRequestsSellers = await contract.methods
+      .view_Requests_Sellers()
+      .call()
+      .then((data) => data);
     let balance;
     const localRegisteredAcc = await contract.methods
       .view_Users()
@@ -45,6 +53,12 @@ function SetAccount() {
     }
     if (balance !== 0) {
       dispatch({ type: "setSelectedBalance", payload: balance });
+    }
+    if (localRequestsSellers !== 0) {
+      dispatch({ type: "setRequestsSellers", payload: localRequestsSellers });
+    }
+    if (localRequestsUsers !== 0) {
+      dispatch({ type: "setRequestsUsers", payload: localRequestsUsers });
     }
   }
   return (

@@ -6,6 +6,8 @@ const defaultState = {
   registeredAccounts: [],
   selectedBalance: 0,
   shops: [],
+  requestsSellers: [],
+  requestsUsers: [],
 };
 
 function reducer(state = defaultState, action) {
@@ -21,6 +23,10 @@ function reducer(state = defaultState, action) {
       return { ...state, selectedBalance: action.payload };
     case "setShops":
       return { ...state, shops: action.payload };
+    case "setRequestsSellers":
+      return { ...state, requestsSellers: action.payload };
+    case "setRequestsUsers":
+      return { ...state, requestsUsers: action.payload };
     default:
       return state;
   }

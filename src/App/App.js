@@ -5,6 +5,7 @@ import AdminPanel from "../components/AdminPanel";
 import AddShop from "../components/AddShop";
 import AddAdmin from "../components/AddAdmin";
 import ChangeRole from "../components/ChangeRole";
+import DeleteShop from "../components/DeleteShop/DeleteShop";
 
 function App() {
   return (
@@ -18,7 +19,10 @@ function App() {
           path="/admin/change-role"
           element={<ChangeRole></ChangeRole>}
         ></Route>
-        <Route path="/admin/delete-shop" element={<></>}></Route>
+        <Route
+          path="/admin/delete-shop"
+          element={<DeleteShop></DeleteShop>}
+        ></Route>
         <Route path="*" element={<h1>404 Not Found</h1>}></Route>
       </Routes>
     </div>
