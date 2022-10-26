@@ -4,10 +4,10 @@ import SetAccount from "../../components/SetAccount";
 import AccountInfo from "../../components/AccountInfo";
 import SwitchRole from "../../components/SwitchRole";
 import Register from "../../components/Register";
-import ListShops from "../../components/ListShops";
 import { Link } from "react-router-dom";
 import SetShop from "../SetShop";
 import { contract } from "../..";
+import ShopElement from "../ShopElement";
 
 function MainPage() {
   const accounts = useSelector((store) => store.accounts);
@@ -23,7 +23,7 @@ function MainPage() {
     try {
       const selected = document
         .querySelector(".create-request")
-        .querySelector("select")?.selectedIndex;
+        .querySelector("select")?.selectedOptions[0].value;
       if (selected !== undefined)
         console.log(
           await contract.methods
@@ -52,8 +52,10 @@ function MainPage() {
     <div>
       <SetAccount></SetAccount>
       {registeredAccounts.map((element) => {
-        if (element.nowRole == 0 && element.user == accounts[selectedAccount]) {
-          isAdmin = true;
+        if (element.role == 0 && element.user == accounts[selectedAccount]) {
+          if (element.nowRole == 0) {
+            isAdmin = true;
+          }
           isExists = true;
           return (
             <div>
@@ -102,6 +104,9 @@ function MainPage() {
           <button onClick={createRequest}>Создать заявку на повышение</button>
         </div>
       ) : undefined}
+      <div>
+        <ShopElement></ShopElement>
+      </div>
     </div>
   );
 }

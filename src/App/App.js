@@ -6,6 +6,8 @@ import AddShop from "../components/AddShop";
 import AddAdmin from "../components/AddAdmin";
 import ChangeRole from "../components/ChangeRole";
 import DeleteShop from "../components/DeleteShop/DeleteShop";
+import MarkElement from "../components/MarkElement";
+import CommentElement from "../components/CommentElement";
 
 function App() {
   return (
@@ -22,6 +24,14 @@ function App() {
         <Route
           path="/admin/delete-shop"
           element={<DeleteShop></DeleteShop>}
+        ></Route>
+        <Route
+          path="/shops/:idShop"
+          element={<MarkElement></MarkElement>}
+        ></Route>
+        <Route
+          path="/shops/:idShop/:idMark"
+          element={<CommentElement></CommentElement>}
         ></Route>
         <Route path="*" element={<h1>404 Not Found</h1>}></Route>
       </Routes>

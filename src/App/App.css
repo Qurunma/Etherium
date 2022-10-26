@@ -28,22 +28,24 @@
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 .admin-panel {
   display: inline-grid;
 }
-
 .open-admin-panel {
   display: inline-grid;
 }
 .create-request {
+  display: inline-grid;
+}
+.shop-element,
+.mark-element {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  width: fit-content;
+  border: 1px solid black;
+  border-radius: 8px;
+}
+.mark-send {
   display: inline-grid;
 }

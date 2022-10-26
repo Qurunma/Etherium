@@ -47,6 +47,7 @@ function AddShop() {
           const isReg = registeredAccounts.map((elem) => {
             if (element === elem.user) return true;
           });
+          console.log(isReg);
           if (isReg.includes(true)) return;
           return <option value={element}>{element}</option>;
         })}
@@ -54,7 +55,7 @@ function AddShop() {
       <span className="error-city" style={{ display: "none" }}>
         Введите город
       </span>
-      <input type="text" placeholder="Город" />
+      <input type="text" placeholder="Введите город" />
       <button onClick={addShop}>Создать магазин</button>
     </div>
   );
