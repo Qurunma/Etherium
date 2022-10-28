@@ -8,7 +8,7 @@ import { Provider } from "react-redux";
 import store from "./libs/Storage";
 import { BrowserRouter } from "react-router-dom";
 
-const contractAddress = "0x6CB80B37834F153276ab71dB811293Ee38535346";
+const contractAddress = "0xc60685BCE92100fe6d430A541212286cD23cCeB7";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 export let web3, contract;
